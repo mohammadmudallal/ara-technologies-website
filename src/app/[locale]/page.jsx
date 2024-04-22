@@ -1,18 +1,18 @@
 // pages/index.tsx
-"use client"
+"use client";
 import Image from "next/image";
 import ResponsiveAppBar from "../../components/appbar";
 import { useTranslations } from "next-intl";
 import { NextIntlClientProvider } from "next-intl";
+import DefaultLayout from "@/Layouts/defaultLayout";
 
 const Home = () => {
-  const t = useTranslations('header');
+  const t = useTranslations("header");
   return (
     <div>
-      <ResponsiveAppBar t={t} />
-      <h1>
-        {t('home')}
-      </h1>
+      <DefaultLayout>
+        <h1>{t("home")}</h1>
+      </DefaultLayout>
     </div>
   );
 };

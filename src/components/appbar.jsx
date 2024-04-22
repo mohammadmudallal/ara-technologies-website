@@ -15,6 +15,11 @@ import LanuageSwapper from "./LanuageSwapper";
 import Links from "./Links";
 import { MoonLoader } from "react-spinners";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { Link, redirect, useRouter } from "../navigation";
+// import { useRouter } from "next/router";
+import enLang from "../../messages/en.json";
+import arLang from "../../messages/ar.json";
+import { handleMenuItemClicked } from "@/helpers/navigationHandler";
 
 function ResponsiveAppBar({ t }) {
   const [lang, setLang] = useState(Cookies.get("NEXT_LOCALE"));
@@ -22,13 +27,16 @@ function ResponsiveAppBar({ t }) {
   const [selectedLink, setselectedLink] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  let router = useRouter(); // Get the router object
+  const currentUrl = usePathname();
+  const currentLanguage = currentUrl.split("/")[1];
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 50);
   }, []);
 
-  const currentUrl = usePathname();
   const isRTL = lang === "ar";
   const open = Boolean(anchorEl);
 
@@ -41,18 +49,31 @@ function ResponsiveAppBar({ t }) {
   ];
 
   const links = [
-    t("home"),
     {
-      page: t("services"),
+      linkName: t("home"),
+      path: "/",
+      children: [],
+    },
+    {
+      linkName: t("services"),
+      path: "/servicesPage",
       children: ["test", "test"],
     },
     {
-      page: t("solutions"),
+      linkName: t("solutions"),
+      path: "/solutionsPage",
       children: ["test", "test"],
     },
-    // t("solutions"),
-    t("partners"),
-    t("contactus"),
+    {
+      linkName: t("partners"),
+      path: "/partnersPage",
+      children: [],
+    },
+    {
+      linkName: t("contactus"),
+      path: "/contactusPage",
+      children: [],
+    },
   ];
   const settings = ["English", "Arabic"];
 
@@ -70,17 +91,26 @@ function ResponsiveAppBar({ t }) {
     setselectedLink(null);
   };
 
-  const handleMenuItemClicked = (page) => {
-    if (lang == "ar" && (page == "English" || page == "الانكليزية")) {
-      window.location.href = "/en";
-    } else if (lang == "en" && (page == "Arabic" || page == "العربية")) {
-      window.location.href = "/ar";
-    }
-  };
+  // const handleMenuItemClicked = (link) => {
+  //   // console.log(link.linkName);
+  //   const currentLanguage = currentUrl.split("/")[1];
+  //   const translationsObject =
+  //     currentLanguage == "en" ? enLang.header : arLang.header;
+  //   let linkKey;
+  //   for (const key in translationsObject) {
+  //     if (translationsObject[key] == link.linkName) {
+  //       linkKey = key;
+  //     }
+  //   }
 
-  const handleNavigation = () => {
+  //   if (linkKey == "arabic" && currentLanguage == "ar")
+  //     window.location.href = "/en";
+  //   else if (linkKey == "english" && currentLanguage == "en")
+  //     window.location.href = "/ar";
+  //   else window.location.href = `/${currentLanguage}/${link.path}`;
+  // };
 
-  }
+  const handleNavigation = () => {};
 
   return (
     <>
@@ -115,8 +145,6 @@ function ResponsiveAppBar({ t }) {
                       </MenuItem>
                     ))}
                 </Links>
-                  
-                
 
                 <Logo
                   xs="flex"
@@ -148,7 +176,17 @@ function ResponsiveAppBar({ t }) {
                     aria-controls={open ? `menu-${index}` : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
-                    onMouseOver={(event) => handleClick(event, index)}
+                    // onMouseEnter={(event) => handleClick(event, index)}
+                    onClick={() => {
+                      // router.push("/servicesPage");
+                      // handleMenuItemClicked(link);
+                      handleMenuItemClicked(
+                        link,
+                        currentLanguage,
+                        enLang,
+                        arLang
+                      );
+                    }}
                     sx={{
                       my: 2,
                       color: "black",
@@ -159,7 +197,7 @@ function ResponsiveAppBar({ t }) {
                       },
                     }}
                   >
-                    {typeof link === "object" ? link.page : link}
+                    {typeof link === "object" ? link.linkName : link}
                   </Button>
                 ))}
 
@@ -221,7 +259,13 @@ function ResponsiveAppBar({ t }) {
                 )}
               </Box>
 
-              <LanuageSwapper t={t} lang={lang} />
+              <LanuageSwapper
+                t={t}
+                lang={lang}
+                currentLanguage={currentLanguage}
+                enLang={enLang}
+                arLang={arLang}
+              />
             </Toolbar>
           </Container>
         </AppBar>
