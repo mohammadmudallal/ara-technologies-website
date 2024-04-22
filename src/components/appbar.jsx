@@ -79,7 +79,7 @@ function ResponsiveAppBar({ t }) {
   };
 
   const handleNavigation = () => {
-    
+
   }
 
   return (
@@ -101,8 +101,8 @@ function ResponsiveAppBar({ t }) {
                   border: "black",
                 }}
               >
-                <Links
-                  children={pages
+                <Links>
+                  {pages
                     .concat(lang == "en" ? t("arabic") : t("english"))
                     .map((page) => (
                       <MenuItem
@@ -114,7 +114,9 @@ function ResponsiveAppBar({ t }) {
                         <Typography textAlign="center">{page}</Typography>
                       </MenuItem>
                     ))}
-                />
+                </Links>
+                  
+                
 
                 <Logo
                   xs="flex"
