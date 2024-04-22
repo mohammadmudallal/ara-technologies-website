@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { I18nextProvider } from "react-i18next";
-import i18next from "i18next";
-// import en_lang from "../../translations/en.json"
-// import ar_lang from "../../translations/ar.json"
 import { cookiesLang } from "@/config/config";
 import Cookies from "js-cookie";
 import { NextIntlClientProvider, useMessages } from "next-intl";
@@ -25,7 +21,7 @@ export default function LocaleLayout({ children, params: { locale } }: {
     const messages = useMessages();
     return (
         <html lang={locale}>
-            <body suppressHydrationWarning={true}>
+            <body suppressHydrationWarning>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     {children}
                 </NextIntlClientProvider>

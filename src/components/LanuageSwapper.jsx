@@ -1,14 +1,12 @@
-"use client"
-
-import { Avatar, Box, Button, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import LanguageIcon from '@mui/icons-material/Language';
-import React, { useState } from 'react'
+import React from 'react'
 
-interface LanguageSwapperProps {
-    t: any,
-    lang: string
-}
-const LanuageSwapper = ({ t, lang }: LanguageSwapperProps) => {
+// interface LanguageSwapperProps {
+//     t: any,
+//     lang: string
+// }
+const LanuageSwapper = ({ t, lang }) => {
     return (
         <Box
             sx={{
