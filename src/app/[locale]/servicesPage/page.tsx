@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import ResponsiveAppBar from "../../../componenets/appbar";
+import ResponsiveAppBar from "../../../components/appbar";
 import { useTranslations } from "next-intl";
 import React from 'react'
 

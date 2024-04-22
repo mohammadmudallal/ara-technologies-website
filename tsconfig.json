@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/componenets/appbar.jsx", "src/app/[locale]/page.jsx", "src/componenets/Links.jsx", "src/componenets/Links.jsx", "src/componenets/LanuageSwapper.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/appbar.jsx", "src/app/[locale]/page.jsx", "src/components/Links.jsx", "src/components/Links.jsx", "src/components/LanuageSwapper.jsx"],
   "exclude": ["node_modules"]
 }
