@@ -3,10 +3,17 @@ import LanguageIcon from "@mui/icons-material/Language";
 import React from "react";
 import { handleMenuItemClicked } from "@/helpers/navigationHandler";
 
-// interface LanguageSwapperProps {
-//     t: any,
-//     lang: string
-// }
+interface LanguageSwapperProps {
+    t: any,
+    lang: string,
+    currentUrl: string,
+    currentLanguage: string,
+    enLang: any,
+    arLang: any,
+    display: any,
+    textDisplay: any,
+    displayIcon: any
+}
 const LanuageSwapper = ({
   t,
   lang,
@@ -17,7 +24,7 @@ const LanuageSwapper = ({
   display,
   textDisplay,
   displayIcon,
-}) => {
+}: LanguageSwapperProps) => {
   return (
     <Box
       sx={{
@@ -53,7 +60,7 @@ const LanuageSwapper = ({
               // { xs: "none", lg: "flex" },
             }}
           >
-            {lang == "en" ? t("english") : t("arabic")}
+            {lang == "en" ? t("arabic") : t("english")}
           </Typography>
           {displayIcon && (<LanguageIcon />)}
         </IconButton>
