@@ -1,8 +1,26 @@
 {
     "header": {
         "home": "الصفحة الرئيسية",
-        "services": "الخدمات",
-        "solutions": "الحلول",
+        "services": {
+            "title":"الخدمات",
+            "our-end-to-end-capability-areas": "مجالات القدرة الشاملة لدينا",
+            "mobile-development": "تطوير موبايل",
+            "strategy-consulting": "استشارات الإستراتيجية",
+            "fixed-bb": "ثابت",
+            "full-service-bearer": "حامل الخدمة الكاملة",
+            "cloud-deployments": "عمليات النشر السحابية"
+        },
+        "solutions": {
+            "title": "الحلول",
+            "mobile-network-solution":"حل شبكة الهاتف المحمول",
+            "radio-transmission-sites": "بناء وإدارة مواقع الراديو والبث الخاصة بك",
+            "traffic-management": "إدارة حركة المرور والتحسين",
+            "mobile-network-monitoring": "مراقبة شبكة المحمول",
+            "multi-dimensional": "تصور وتحليل البيانات متعددة الأبعاد",
+            "mobile-network-auditing": "تدقيق شبكة الهاتف المحمول وتحسينها وتكاملها",
+            "parental-controller": "المراقب الأبوي",
+            "value-added-services": "خدمات القيمة المضافة"
+        },
         "partners": "الشركاء",
         "contactus": "تواصل",
         "arabic": "العربية",

@@ -1,8 +1,26 @@
 {
     "header": {
         "home": "Home",
-        "services": "Services",
-        "solutions": "Solutions",
+        "services": {
+            "title": "Services",
+            "our-end-to-end-capability-areas": "Our End-to-End Capability Areas",
+            "mobile-development": "Mobile BB (LTE) Development",
+            "strategy-consulting": "Strategy Consulting",
+            "fixed-bb": "Fixed BB (FTTx) Everywhere",
+            "full-service-bearer": "Full Service Bearer",
+            "cloud-deployments": "Cloud Deployments"
+        },
+        "solutions": {
+            "title": "Solutions",
+            "mobile-network-solution":"Mobile Network Solution",
+            "radio-transmission-sites": "Build & manage your radio & transmission sites",
+            "traffic-management": "Traffic Management & optimization",
+            "mobile-network-monitoring": "Mobile Network Monitoring",
+            "multi-dimensional": "Multi-dimensional Data Visualization & Analytics",
+            "mobile-network-auditing": "Mobile Network Auditing, Optimization & Integration",
+            "parental-controller": "Parental Controller",
+            "value-added-services": "Value-Added Services"
+        },
         "partners": "Partners",
         "contactus": "Contact Us",
         "arabic": "Arabic",

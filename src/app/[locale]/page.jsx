@@ -11,7 +11,9 @@ const Home = () => {
   return (
     <div>
       <DefaultLayout>
-        <h1>{t("home")}</h1>
+        <div className="h-screen">
+          <h1>{t("home")}</h1>
+        </div>
       </DefaultLayout>
     </div>
   );

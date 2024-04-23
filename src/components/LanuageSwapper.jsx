@@ -1,13 +1,21 @@
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
-import React from "react";
+import React, { useEffect } from "react";
 import { handleMenuItemClicked } from "@/helpers/navigationHandler";
 
 // interface LanguageSwapperProps {
 //     t: any,
 //     lang: string
 // }
-const LanuageSwapper = ({ t, lang, currentLanguage, enLang, arLang }) => {
+const LanuageSwapper = ({
+  t,
+  lang,
+  currentUrl,
+  currentLanguage,
+  enLang,
+  arLang,
+}) => {
+  // useEffect(() => {}, [currentLanguage]);
   return (
     <Box
       sx={{
@@ -18,33 +26,14 @@ const LanuageSwapper = ({ t, lang, currentLanguage, enLang, arLang }) => {
       <Tooltip title="Open settings">
         <IconButton
           onClick={() => {
+            // console.log(currentLanguage)
             handleMenuItemClicked(
-              currentLanguage == "en"
-                ? {
-                    linkName: t("arabic"),
-                    path: "/ar",
-                    children: [],
-                  }
-                : {
-                    linkName: t("english"),
-                    path: "/en",
-                    children: [],
-                  },
+              null,
+              currentUrl,
               currentLanguage,
               enLang,
               arLang
             );
-            currentLanguage == "en"
-              ? {
-                  linkName: t("arabic"),
-                  path: "/ar",
-                  children: [],
-                }
-              : {
-                  linkName: t("english"),
-                  path: "/en",
-                  children: [],
-                };
           }}
           sx={{ p: 0 }}
         >

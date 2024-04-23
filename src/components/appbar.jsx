@@ -1,34 +1,26 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
+import React, { useEffect, useState } from "react";
+import {AppBar,Box, Toolbar,Typography, Menu, Container, Button, MenuItem} from "@mui/material";
+import { MoonLoader } from "react-spinners";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import Cookies from "js-cookie";
-import { usePathname } from "next/navigation";
+
+//Custom file imports
 import Logo from "./Logo";
 import LanuageSwapper from "./LanuageSwapper";
 import Links from "./Links";
-import { MoonLoader } from "react-spinners";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import { Link, redirect, useRouter } from "../navigation";
-// import { useRouter } from "next/router";
 import enLang from "../../messages/en.json";
 import arLang from "../../messages/ar.json";
 import { handleMenuItemClicked } from "@/helpers/navigationHandler";
+import { getLinks } from "@/utils/constants";
 
-function ResponsiveAppBar({ t }) {
+function ResponsiveAppBar({ t, currentUrl }) {
   const [lang, setLang] = useState(Cookies.get("NEXT_LOCALE"));
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedLink, setselectedLink] = useState(0);
+  const [selectedLink, setselectedLink] = useState();
   const [loading, setLoading] = useState(true);
 
-  let router = useRouter(); // Get the router object
-  const currentUrl = usePathname();
+  // const currentUrl = usePathname();
   const currentLanguage = currentUrl.split("/")[1];
 
   useEffect(() => {
@@ -42,75 +34,26 @@ function ResponsiveAppBar({ t }) {
 
   const pages = [
     t("home"),
-    t("services"),
-    t("solutions"),
+    t("services.title"),
+    t("solutions.title"),
     t("partners"),
     t("contactus"),
   ];
-
-  const links = [
-    {
-      linkName: t("home"),
-      path: "/",
-      children: [],
-    },
-    {
-      linkName: t("services"),
-      path: "/servicesPage",
-      children: ["test", "test"],
-    },
-    {
-      linkName: t("solutions"),
-      path: "/solutionsPage",
-      children: ["test", "test"],
-    },
-    {
-      linkName: t("partners"),
-      path: "/partnersPage",
-      children: [],
-    },
-    {
-      linkName: t("contactus"),
-      path: "/contactusPage",
-      children: [],
-    },
-  ];
-  const settings = ["English", "Arabic"];
 
   useEffect(() => {
     document.documentElement.dir = lang == "ar" ? "rtl" : "ltr";
   }, [isRTL, lang]);
 
-  const handleClick = (event, index) => {
+  const handleMouseOver = (event, index) => {
     setselectedLink(null);
+    setselectedLink(getLinks(t)[index]);
     setAnchorEl(event.currentTarget);
-    setselectedLink(links[index]);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
     setselectedLink(null);
   };
-
-  // const handleMenuItemClicked = (link) => {
-  //   // console.log(link.linkName);
-  //   const currentLanguage = currentUrl.split("/")[1];
-  //   const translationsObject =
-  //     currentLanguage == "en" ? enLang.header : arLang.header;
-  //   let linkKey;
-  //   for (const key in translationsObject) {
-  //     if (translationsObject[key] == link.linkName) {
-  //       linkKey = key;
-  //     }
-  //   }
-
-  //   if (linkKey == "arabic" && currentLanguage == "ar")
-  //     window.location.href = "/en";
-  //   else if (linkKey == "english" && currentLanguage == "en")
-  //     window.location.href = "/ar";
-  //   else window.location.href = `/${currentLanguage}/${link.path}`;
-  // };
-
-  const handleNavigation = () => {};
 
   return (
     <>
@@ -119,7 +62,7 @@ function ResponsiveAppBar({ t }) {
           <MoonLoader color="red" />
         </div>
       ) : (
-        <AppBar position="static" sx={{ backgroundColor: "white" }}>
+        <AppBar position="sticky" sx={{ backgroundColor: "white" }}>
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Box
@@ -138,6 +81,7 @@ function ResponsiveAppBar({ t }) {
                       <MenuItem
                         key={page}
                         onClick={() => {
+                          // Modify this
                           handleMenuItemClicked(page);
                         }}
                       >
@@ -170,18 +114,20 @@ function ResponsiveAppBar({ t }) {
                   mr: lang === "ar" ? 10 : 0,
                 }}
               >
-                {links.map((link, index) => (
+                {getLinks(t).map((link, index) => (
                   <Button
                     key={index}
                     aria-controls={open ? `menu-${index}` : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
-                    // onMouseEnter={(event) => handleClick(event, index)}
+                    // onMouseEnter={handleMouseOver}
+                    // onClick={handleMouseOver}
+                    onMouseEnter={(event) => handleMouseOver(event, index)}
+                    // onMouseOut={handleClose}
                     onClick={() => {
-                      // router.push("/servicesPage");
-                      // handleMenuItemClicked(link);
                       handleMenuItemClicked(
                         link,
+                        currentUrl,
                         currentLanguage,
                         enLang,
                         arLang
@@ -201,7 +147,7 @@ function ResponsiveAppBar({ t }) {
                   </Button>
                 ))}
 
-                {selectedLink && selectedLink.children && (
+                {selectedLink && selectedLink.children.length != 0 && (
                   <Box
                     sx={{
                       flexGrow: 1,
@@ -214,7 +160,7 @@ function ResponsiveAppBar({ t }) {
                     <Menu
                       anchorEl={anchorEl}
                       open={open}
-                      onMouseOut={handleClose}
+                      // onMouseOut={handleClose}
                       onClose={handleClose}
                       onClick={handleClose}
                       transformOrigin={{ horizontal: "right", vertical: "top" }}
@@ -223,6 +169,7 @@ function ResponsiveAppBar({ t }) {
                         paper: {
                           elevation: 0,
                           sx: {
+                            padding: "5px",
                             overflow: "visible",
                             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                             mt: 1.5,
@@ -249,9 +196,34 @@ function ResponsiveAppBar({ t }) {
                       }}
                     >
                       {selectedLink.children.map((child, index) => (
-                        <MenuItem key={index} onClick={handleClose}>
-                          {child}
-                        </MenuItem>
+                        <Button
+                          key={index}
+                          aria-controls={open ? `menu-${index}` : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? "true" : undefined}
+                          onClick={() => {
+                            handleMenuItemClicked(
+                              child,
+                              currentUrl,
+                              currentLanguage,
+                              enLang,
+                              arLang
+                            );
+                          }}
+                          sx={{
+                            my: 2,
+                            color: "black",
+                            display: "flex",
+                            width: "100%",
+                            backgroundColor: "white", // Set a default background color
+                            transition: "background-color 0.2s ease-in-out", // Smooth transition effect
+                            "&:hover": {
+                              backgroundColor: "lightgrey", // Change background color on hover
+                            },
+                          }}
+                        >
+                          {child.linkName}
+                        </Button>
                       ))}
                     </Menu>
                     <MdKeyboardArrowDown />
@@ -263,6 +235,7 @@ function ResponsiveAppBar({ t }) {
                 t={t}
                 lang={lang}
                 currentLanguage={currentLanguage}
+                currentUrl={currentUrl}
                 enLang={enLang}
                 arLang={arLang}
               />
