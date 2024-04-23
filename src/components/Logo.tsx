@@ -16,6 +16,7 @@ const Logo = ({ xs, md, src, height, width }: LogoProps) => {
       sx={{
         display: { xs: xs, md: md },
         mr: 1,
+        mt: 0,
         minWidth: 40,
       }}
     >

@@ -1,8 +1,21 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {AppBar,Box, Toolbar,Typography, Menu, Container, Button, MenuItem} from "@mui/material";
+import { useSpring, animated } from "react-spring";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Menu,
+  Container,
+  Button,
+  MenuItem,
+  Collapse,
+  IconButton,
+} from "@mui/material";
 import { MoonLoader } from "react-spinners";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import MenuIcon from "@mui/icons-material/Menu";
 import Cookies from "js-cookie";
 
 //Custom file imports
@@ -13,16 +26,38 @@ import enLang from "../../messages/en.json";
 import arLang from "../../messages/ar.json";
 import { handleMenuItemClicked } from "@/helpers/navigationHandler";
 import { getLinks } from "@/utils/constants";
+import { get } from "https";
 
 function ResponsiveAppBar({ t, currentUrl }) {
   const [lang, setLang] = useState(Cookies.get("NEXT_LOCALE"));
   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorElSmallScreen, setAnchorElSmallScreen] = useState(null);
   const [selectedLink, setselectedLink] = useState();
   const [loading, setLoading] = useState(true);
-
-  // const currentUrl = usePathname();
+  const [showLinks, setshowLinks] = useState(false);
   const currentLanguage = currentUrl.split("/")[1];
 
+  const [menuAnimationDelay, setMenuAnimationDelay] = useState(0);
+
+  useEffect(() => {
+    // Set a delay on initial render to ensure app bar expansion is complete before animation
+    // if (showLinks) {
+    setTimeout(() => setMenuAnimationDelay(400), 0); // Adjust delay as needed (in milliseconds)
+    // }
+  }, []);
+
+  const menuItems = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: showLinks ? 1 : 0 },
+    delay: menuAnimationDelay,
+    config: { duration: 300, ease: "ease-in-out" },
+    onStart: () => {
+      // Optional: Play a sound or perform other actions when animation starts
+    },
+    onRest: () => {
+      // Optional: Perform actions after animation finishes
+    },
+  });
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -31,18 +66,22 @@ function ResponsiveAppBar({ t, currentUrl }) {
 
   const isRTL = lang === "ar";
   const open = Boolean(anchorEl);
+  const openSmall = Boolean(anchorElSmallScreen);
 
-  const pages = [
-    t("home"),
-    t("services.title"),
-    t("solutions.title"),
-    t("partners"),
-    t("contactus"),
-  ];
 
   useEffect(() => {
     document.documentElement.dir = lang == "ar" ? "rtl" : "ltr";
   }, [isRTL, lang]);
+
+  const handleAppbarCollapse = () => {
+    setshowLinks((prev) => !prev);
+  };
+
+  const handleShowLinkMenu = (event, index) => {
+    setselectedLink(null);
+    setselectedLink(getLinks(t)[index]);
+    setAnchorElSmallScreen(event.currentTarget);
+  };
 
   const handleMouseOver = (event, index) => {
     setselectedLink(null);
@@ -69,36 +108,99 @@ function ResponsiveAppBar({ t, currentUrl }) {
                 sx={{
                   flexGrow: 1,
                   display: { xs: "flex", md: "none" },
-                  justifyContent: "space-between",
+                  justifyContent: "center",
                   alignItems: "center",
-                  border: "black",
+                  // border: "red 1px solid",
+                  flexDirection: "column",
+                  transition: "height 0.5s ease-in-out",
+                  height: showLinks ? "350px" : "50px",
                 }}
               >
-                <Links>
-                  {pages
-                    .concat(lang == "en" ? t("arabic") : t("english"))
-                    .map((page) => (
-                      <MenuItem
-                        key={page}
-                        onClick={() => {
-                          // Modify this
-                          handleMenuItemClicked(page);
-                        }}
-                      >
-                        <Typography textAlign="center">{page}</Typography>
-                      </MenuItem>
-                    ))}
-                </Links>
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    // border: "blue 1px solid",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      flexGrow: 1,
+                      display: { xs: "flex", md: "none" },
+                      alignItems: "start",
+                      // border: "yellow 1px solid",
+                    }}
+                  >
+                    <IconButton
+                      size="large"
+                      aria-label="account of current user"
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      onClick={handleAppbarCollapse}
+                      color="black"
+                      sx={{
+                        mt: showLinks ? "0px" : "5px",
+                      }}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                  </Box>
 
-                <Logo
-                  xs="flex"
-                  md="none"
-                  src="/ara-logo.png"
-                  height={100}
-                  width={100}
-                />
+                  <Logo
+                    xs="flex"
+                    md="flex"
+                    src="/ara-logo.png"
+                    height={100}
+                    width={100}
+                  />
+                </Box>
+                {showLinks && (
+                  <Box
+                    sx={{
+                      flexGrow: 1,
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingTop: "5px"
+                      // border: "black 1px solid",
+                    }}
+                    // onClick={() => console.log(getLinks(t))}
+                  >
+                    {getLinks(t).map((link, index) => (
+                      <animated.div key={index} style={menuItems}>
+                        <MenuItem
+                          onClick={(event) =>
+                            link.children.length != 0 ? handleShowLinkMenu(event, index) : handleMenuItemClicked(
+                              link,
+                              currentUrl,
+                              enLang,
+                              arLang
+                            )
+                          }
+                          sx={{ color: "black" }}
+                        >
+                          {link.linkName}
+                        </MenuItem>
+                      </animated.div>
+                    ))}
+                    <animated.div style={menuItems}>
+                      <LanuageSwapper
+                        t={t}
+                        lang={lang}
+                        currentLanguage={currentLanguage}
+                        currentUrl={currentUrl}
+                        enLang={enLang}
+                        arLang={arLang}
+                        display={{ lg: "none", xs: "flex", md: "flex" }}
+                        textDisplay={{ xs: "flex", lg: "none" }}
+                        displayIcon={false}
+                      />
+                    </animated.div>
+                  </Box>
+                )}
               </Box>
 
+              {/* Big screen */}
               <Logo
                 xs="none"
                 md="flex"
@@ -158,49 +260,18 @@ function ResponsiveAppBar({ t, currentUrl }) {
                     }}
                   >
                     <Menu
-                      anchorEl={anchorEl}
-                      open={open}
+                      anchorEl={anchorEl ? anchorEl : anchorElSmallScreen}
+                      open={open ? open : openSmall}
                       // onMouseOut={handleClose}
                       onClose={handleClose}
                       onClick={handleClose}
-                      transformOrigin={{ horizontal: "right", vertical: "top" }}
-                      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-                      slotProps={{
-                        paper: {
-                          elevation: 0,
-                          sx: {
-                            padding: "5px",
-                            overflow: "visible",
-                            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                            mt: 1.5,
-                            "& .MuiAvatar-root": {
-                              width: 32,
-                              height: 32,
-                              ml: -0.5,
-                              mr: 1,
-                            },
-                            "&::before": {
-                              content: '""',
-                              display: "block",
-                              position: "absolute",
-                              top: 0,
-                              right: 14,
-                              width: 10,
-                              height: 10,
-                              bgcolor: "background.paper",
-                              transform: "translateY(-50%) rotate(45deg)",
-                              zIndex: 0,
-                            },
-                          },
-                        },
-                      }}
                     >
                       {selectedLink.children.map((child, index) => (
                         <Button
                           key={index}
-                          aria-controls={open ? `menu-${index}` : undefined}
+                          aria-controls={open || openSmall ? `menu-${index}` : undefined}
                           aria-haspopup="true"
-                          aria-expanded={open ? "true" : undefined}
+                          aria-expanded={open || openSmall ? "true" : undefined}
                           onClick={() => {
                             handleMenuItemClicked(
                               child,
@@ -238,6 +309,9 @@ function ResponsiveAppBar({ t, currentUrl }) {
                 currentUrl={currentUrl}
                 enLang={enLang}
                 arLang={arLang}
+                display={{ lg: "flex", xs: "none", md: "none" }}
+                textDisplay={{ xs: "none", lg: "flex" }}
+                displayIcon={true}
               />
             </Toolbar>
           </Container>

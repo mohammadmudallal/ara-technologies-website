@@ -62,7 +62,7 @@ const Footer = ({ t, currentUrl, enLang, arLang }: FooterProps) => {
         >
             <Container maxWidth="xl">
                 <Logo
-                    xs="none"
+                    xs="flex"
                     md="flex"
                     src="/ara-logo.png"
                     height={100}

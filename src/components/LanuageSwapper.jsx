@@ -1,6 +1,6 @@
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
-import React, { useEffect } from "react";
+import React from "react";
 import { handleMenuItemClicked } from "@/helpers/navigationHandler";
 
 // interface LanguageSwapperProps {
@@ -14,17 +14,25 @@ const LanuageSwapper = ({
   currentLanguage,
   enLang,
   arLang,
+  display,
+  textDisplay,
+  displayIcon,
 }) => {
-  // useEffect(() => {}, [currentLanguage]);
   return (
     <Box
       sx={{
         flexGrow: 0,
-        display: { lg: "flex", xs: "none", md: "none" },
+        display: display,
+        // { lg: "flex", xs: "flex", md: "none" },
       }}
     >
       <Tooltip title="Open settings">
         <IconButton
+          sx={{
+            mr: { lg: "8px", xs: "8px" },
+            ml: { lg: "8px", xs: "8px" },
+            fontSize: { xs: 20 },
+          }}
           onClick={() => {
             // console.log(currentLanguage)
             handleMenuItemClicked(
@@ -35,12 +43,19 @@ const LanuageSwapper = ({
               arLang
             );
           }}
-          sx={{ p: 0 }}
         >
-          <Typography variant="body1" sx={{ mr: "8px", ml: "8px" }}>
+          <Typography
+            variant="body1"
+            sx={{
+              mr: { lg: "8px", xs: "auto" },
+              ml: { lg: "8px", xs: "auto" },
+              display: textDisplay 
+              // { xs: "none", lg: "flex" },
+            }}
+          >
             {lang == "en" ? t("english") : t("arabic")}
           </Typography>
-          <LanguageIcon />
+          {displayIcon && (<LanguageIcon />)}
         </IconButton>
       </Tooltip>
     </Box>
