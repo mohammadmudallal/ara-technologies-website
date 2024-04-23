@@ -11,7 +11,7 @@ const ServicesPage = () => {
         <div>
             <DefaultLayout>
                 <div className="h-screen">
-                    <h1>{t("slutions.title")}</h1>
+                    <h1>{t("solutions.title")}</h1>
                 </div>
             </DefaultLayout>
         </div>

@@ -4,7 +4,7 @@ import "./globals.css";
 import { cookiesLang } from "@/config/config";
 import Cookies from "js-cookie";
 import { NextIntlClientProvider, useMessages } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 
@@ -26,6 +26,7 @@ export default async function LocaleLayout({ children, params: { locale } }: {
     params: { locale: string };
 }) {
 
+    unstable_setRequestLocale(locale)
     const messages = await getMessages();
     if(!messages) notFound();
 
