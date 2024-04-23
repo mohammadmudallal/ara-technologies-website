@@ -7,7 +7,7 @@ import LanuageSwapper from '../LanuageSwapper';
 import Logo from '../Logo';
 import { getLinks } from '@/utils/constants';
 import { handleMenuItemClicked } from '@/helpers/navigationHandler';
-import { open } from 'fs/promises';
+import {getStyles} from '@/styles/appbar-styles'
 
 interface SmallMediumNavbarProps {
     currentUrl: string,
@@ -17,7 +17,7 @@ interface SmallMediumNavbarProps {
     lang: string,
     t: any
 }
-const SmallMediumNavbar = ({t, currentUrl, currentLanguage, arLang, enLang, lang }: SmallMediumNavbarProps) => {
+const SmallMediumNavbar = ({ t, currentUrl, currentLanguage, arLang, enLang, lang }: SmallMediumNavbarProps) => {
     const [menuAnimationDelay, setMenuAnimationDelay] = useState<number>(0);
     const [anchorElSmallScreen, setAnchorElSmallScreen] = useState<any>(null);
     const [selectedLink, setselectedLink] = useState<any>();
@@ -51,38 +51,20 @@ const SmallMediumNavbar = ({t, currentUrl, currentLanguage, arLang, enLang, lang
     const handleClose = () => {
         setAnchorElSmallScreen(null);
         setselectedLink(null);
-      };
+    };
 
-      const handleAppbarCollapse = () => {
+    const handleAppbarCollapse = () => {
         setshowLinks((prev) => !prev);
-      };
+    };
     return (
         <Box
-            sx={{
-                flexGrow: 1,
-                display: { xs: "flex", md: "none" },
-                justifyContent: "center",
-                alignItems: "center",
-                // border: "red 1px solid",
-                flexDirection: "column",
-                transition: "height 0.5s ease-in-out",
-                height: showLinks ? "350px" : "50px",
-            }}
+            sx={getStyles(showLinks).smallMediumNavbarStyles.mainBoxStyle}
         >
             <Box
-                sx={{
-                    display: "flex",
-                    width: "100%",
-                    // border: "blue 1px solid",
-                }}
+                sx={getStyles().smallMediumNavbarStyles.secondBoxStyle}
             >
                 <Box
-                    sx={{
-                        flexGrow: 1,
-                        display: { xs: "flex", md: "none" },
-                        alignItems: "start",
-                        // border: "yellow 1px solid",
-                    }}
+                    sx={getStyles().smallMediumNavbarStyles.thirdBoxStyle}
                 >
                     <IconButton
                         size="large"
@@ -90,10 +72,7 @@ const SmallMediumNavbar = ({t, currentUrl, currentLanguage, arLang, enLang, lang
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={handleAppbarCollapse}
-                        sx={{
-                            mt: showLinks ? "0px" : "5px",
-                            color: "black"
-                        }}
+                        sx={getStyles().smallMediumNavbarStyles.iconButtonStyle}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -108,15 +87,7 @@ const SmallMediumNavbar = ({t, currentUrl, currentLanguage, arLang, enLang, lang
             </Box>
             {showLinks && (
                 <Box
-                    sx={{
-                        flexGrow: 1,
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        paddingTop: "5px"
-                        // border: "black 1px solid",
-                    }}
-                // onClick={() => console.log(getLinks(t))}
+                    sx={getStyles().smallMediumNavbarStyles.linksBoxStyle}
                 >
                     {getLinks(t).map((link, index) => (
                         <animated.div key={index} style={menuItems}>
@@ -153,13 +124,7 @@ const SmallMediumNavbar = ({t, currentUrl, currentLanguage, arLang, enLang, lang
                     {selectedLink && selectedLink.children.length != 0 && (
                         <Box
                             onClick={handleClose}
-                            sx={{
-                                flexGrow: 1,
-                                display: { xs: "flex", md: "none" },
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                border: "black",
-                            }}
+                            sx={getStyles().smallMediumNavbarStyles.menuBoxStyle}
                         >
                             <Menu
                                 anchorEl={anchorElSmallScreen}
@@ -182,17 +147,7 @@ const SmallMediumNavbar = ({t, currentUrl, currentLanguage, arLang, enLang, lang
                                                 arLang
                                             );
                                         }}
-                                        sx={{
-                                            my: 2,
-                                            color: "black",
-                                            display: "flex",
-                                            width: "100%",
-                                            backgroundColor: "white", // Set a default background color
-                                            transition: "background-color 0.2s ease-in-out", // Smooth transition effect
-                                            "&:hover": {
-                                                backgroundColor: "lightgrey", // Change background color on hover
-                                            },
-                                        }}
+                                        sx={getStyles().smallMediumNavbarStyles.buttonStyle}
                                     >
                                         {child.linkName}
                                     </Button>

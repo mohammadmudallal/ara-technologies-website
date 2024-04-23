@@ -4,6 +4,7 @@ import { Box, Button, Menu } from '@mui/material';
 import { getLinks } from '@/utils/constants';
 import { handleMenuItemClicked } from '@/helpers/navigationHandler';
 import LanuageSwapper from '../LanuageSwapper';
+import { getStyles } from '@/styles/appbar-styles';
 
 interface LargeNavbarProps {
     t: any,
@@ -38,12 +39,7 @@ const LargeNavbar = ({ t, lang, currentUrl, currentLanguage, enLang, arLang }: L
                 width={100}
             />
             <Box
-                sx={{
-                    flexGrow: 1,
-                    display: { xs: "none", md: "flex" },
-                    ml: lang === "en" ? 10 : 0,
-                    mr: lang === "ar" ? 10 : 0,
-                }}
+                sx={getStyles(lang).largeNabarStyles.mainBoxStyle}
             >
                 {getLinks(t).map((link, index) => (
                     <Button
@@ -64,15 +60,7 @@ const LargeNavbar = ({ t, lang, currentUrl, currentLanguage, enLang, arLang }: L
                                 arLang
                             );
                         }}
-                        sx={{
-                            my: 2,
-                            color: "black",
-                            display: "block",
-                            fontWeight: "bold",
-                            ":hover": {
-                                color: "grey", // change color to red on hover and focus
-                            },
-                        }}
+                        sx={getStyles().largeNabarStyles.linkButtonStyle}
                     >
                         {typeof link === "object" ? link.linkName : link}
                     </Button>
@@ -80,13 +68,7 @@ const LargeNavbar = ({ t, lang, currentUrl, currentLanguage, enLang, arLang }: L
 
                 {selectedLink && selectedLink.children.length != 0 && (
                     <Box
-                        sx={{
-                            flexGrow: 1,
-                            display: { xs: "flex", md: "none" },
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            border: "black",
-                        }}
+                        sx={getStyles().largeNabarStyles.menuStyle}
                     >
                         <Menu
                             anchorEl={anchorEl}
@@ -110,17 +92,7 @@ const LargeNavbar = ({ t, lang, currentUrl, currentLanguage, enLang, arLang }: L
                                             arLang
                                         );
                                     }}
-                                    sx={{
-                                        my: 2,
-                                        color: "black",
-                                        display: "flex",
-                                        width: "100%",
-                                        backgroundColor: "white", // Set a default background color
-                                        transition: "background-color 0.2s ease-in-out", // Smooth transition effect
-                                        "&:hover": {
-                                            backgroundColor: "lightgrey", // Change background color on hover
-                                        },
-                                    }}
+                                    sx={getStyles().largeNabarStyles.menuLinkButtonStyle}
                                 >
                                     {child.linkName}
                                 </Button>
