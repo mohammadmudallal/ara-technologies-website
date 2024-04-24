@@ -41,7 +41,7 @@ function ResponsiveAppBar({ t, currentUrl }: ResponsiveAppBarProps) {
     <>
       {loading ? (
         <div className="flex justify-center items-center h-screen w-full">
-          <MoonLoader color="red" />
+          <MoonLoader color="blue" />
         </div>
       ) : (
         <AppBar position="sticky" sx={{ backgroundColor: "white" }}>
