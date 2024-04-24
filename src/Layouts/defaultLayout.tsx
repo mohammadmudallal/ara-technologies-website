@@ -13,11 +13,13 @@ const DefaultLayout = ({ children }: LayoutProps) => {
     const t = useTranslations('header');
     const currentUrl = usePathname();
     const currentLanguage = currentUrl.split("/")[1];
-    
+
     return (
         <div>
-            <ResponsiveAppBar t={t} currentUrl={currentUrl}/>
-            {children}
+            <ResponsiveAppBar t={t} currentUrl={currentUrl} />
+            {/* <div className='h-screen'> */}
+                {children}
+            {/* </div> */}
             <Footer t={t} currentUrl={currentUrl} arLang={arLang} enLang={enLang} />
         </div>
     )

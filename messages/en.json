@@ -12,7 +12,7 @@
         },
         "solutions": {
             "title": "Solutions",
-            "mobile-network-solution":"Mobile Network Solution",
+            "mobile-network-solution": "Mobile Network Solution",
             "radio-transmission-sites": "Build & manage your radio & transmission sites",
             "traffic-management": "Traffic Management & optimization",
             "mobile-network-monitoring": "Mobile Network Monitoring",
@@ -25,5 +25,24 @@
         "contactus": "Contact Us",
         "arabic": "Arabic",
         "english": "English"
+    },
+    "home-page": {
+        "image-one-text": "STRATEGIC CONSULTING, TREND ANALYSIS & PRACTICAL SOLUTIONS FOR TELECOMS INDUSTRY",
+        "image-two-title": "ARA TECHNOLOGIES - HARNESS DIGITAL TRANSFORMATION FOR BUSINESS SUCCESS",
+        "image-two-text": "Offering a deep understanding of the business needs of telecoms operators, ARA Technologies empower our partners to successfully navigate transition and harness change in the ICT sphere. We can provide enhanced data and network analysis, a high-quality user experience and future-proof evolution of technology for your business and network. Using the latest developments in artificial intelligence and machine learning, we drive digital transformation and deliver seamless connectivity and network convergence to your doorstep. With our strategic consulting, end-to-end capabilities and practical solutions, transformation creates endless opportunity for growth and success.",
+        "image-three-text": "Your strategic partner in the ICT Sphere"
+    },
+    "partners-page": {
+        "title": "Our Partners"
+    },
+    "contactus-page": {
+        "title": "Contact Us",
+        "address-one": "DUBAI",
+        "address-two": "DSO-THUB-1-D-FXD-G081",
+        "address-three": "Dubai – UAE",
+        "name-field": "Name",
+        "email-field": "Email",
+        "message-field": "Message",
+        "submit": "Submit"
     }
 }

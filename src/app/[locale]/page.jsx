@@ -3,13 +3,11 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import DefaultLayout from "@/Layouts/defaultLayout";
 import { Box, Typography } from "@mui/material";
-import { useResize } from "react-spring";
-import { useEffect, useState } from "react";
 import { useWindowSize } from "@/helpers/windowResize";
 import { styles } from "@/styles/home/home-page-styles";
 
 const Home = () => {
-  const t = useTranslations("header");
+  const t = useTranslations("home-page");
   const size = useWindowSize();
   const imageSrc =
     size.width < 600
@@ -32,8 +30,7 @@ const Home = () => {
                 variant="h5"
                 sx={styles.imageOneTypographyStyles}
               >
-                STRATEGIC CONSULTING, TREND ANALYSIS & PRACTICAL SOLUTIONS FOR
-                TELECOMS INDUSTRY
+                { t('image-one-text') }
               </Typography>
             </Box>
           </Box>
@@ -55,24 +52,13 @@ const Home = () => {
                 variant="h5"
                 sx={styles.imageTwoTypographyOneStyle}
               >
-                ARA TECHNOLOGIES - HARNESS DIGITAL TRANSFORMATION FOR BUSINESS
-                SUCCESS
+                { t('image-two-title') }
               </Typography>
               <Typography
                 variant="h5"
                 sx={styles.imageTwoTypographyTwoStyle}
               >
-                Offering a deep understanding of the business needs of telecoms
-                operators, ARA Technologies empower our partners to successfully
-                navigate transition and harness change in the ICT sphere. We can
-                provide enhanced data and network analysis, a high-quality user
-                experience and future-proof evolution of technology for your
-                business and network. Using the latest developments in
-                artificial intelligence and machine learning, we drive digital
-                transformation and deliver seamless connectivity and network
-                convergence to your doorstep. With our strategic consulting,
-                end-to-end capabilities and practical solutions, transformation
-                creates endless opportunity for growth and success.
+                { t('image-two-text') }
               </Typography>
             </Box>
           </Box>
@@ -87,7 +73,7 @@ const Home = () => {
             />
             <Box sx={styles.imageThreeOverlay}>
               <Typography variant="h5" sx={styles.imageThreeText}>
-              Your strategic partner in the ICT Sphere
+              { t('image-three-text') }
               </Typography>
             </Box>
           </Box>
